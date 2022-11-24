@@ -7,7 +7,11 @@ import os
 def datafiles():
     # I find it easier to just list the names of the
     # data files I intend to use in a package.
-    mydatafilenames = {"readfromfile": "readme.json", "writetofile": "writetome.json"}
+    mydatafilenames = {
+        "readfromfile": "readme.json",
+        "writetofile": "writetome.json",
+        "readfromssrcfile": "readmetoo.json",
+    }
 
     main_group_parser = argparse.ArgumentParser(
         description="A package datafiles example"
@@ -16,7 +20,10 @@ def datafiles():
         "-l", "--list", action="store_true", help="List package data files"
     )
     main_group_parser.add_argument(
-        "-r", "--readme", action="store_true", help="Outputs data/readme.json"
+        "-r",
+        "--readme",
+        action="store_true",
+        help="Outputs src/pkgexampledatafiles/data/readme.json",
     )
     main_group_parser.add_argument(
         "-c",
@@ -25,10 +32,22 @@ def datafiles():
         help="Copies data/readme.json to data/writetome.json",
     )
     main_group_parser.add_argument(
-        "-w", "--writetome", action="store_true", help="Outputs data/writetome.json"
+        "-w",
+        "--writetome",
+        action="store_true",
+        help="Outputs src/pkgexampledatafiles/data/writetome.json",
     )
     main_group_parser.add_argument(
-        "-d", "--delete", action="store_true", help="Delete data/writetome.json"
+        "-d",
+        "--delete",
+        action="store_true",
+        help="Delete src/pkgexampledatafiles/data/writetome.json",
+    )
+    main_group_parser.add_argument(
+        "-s",
+        "--srcreadme",
+        action="store_true",
+        help="Outputs src/data/readme.json, a seperate dir under src",
     )
 
     my_args = main_group_parser.parse_args()
@@ -114,3 +133,19 @@ def datafiles():
         )
         with my_pathlib_context_manager as fullfilepath:
             os.remove(fullfilepath)
+
+    if my_args.srcreadme:
+        my_readfromfilename = mydatafilenames["readfromssrcfile"]
+        my_traversable_resource_container = importlib.resources.files("data").joinpath(
+            my_readfromfilename
+        )
+        my_pathlib_context_manager = importlib.resources.as_file(
+            my_traversable_resource_container
+        )
+        with my_pathlib_context_manager as fullfilepath:
+            try:
+                with open(fullfilepath, "r") as myfile:
+                    text = myfile.read()
+                    print(text)
+            except FileNotFoundError:
+                print("File does not exist")

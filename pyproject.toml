@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pkgexampledatafiles"
-version = "0.0.2"
+version = "0.0.3"
 authors = [
   { name="Good Boy", email="pythonic@rexbytes.com" },
 ]
@@ -20,11 +20,12 @@ classifiers = [
 
 [tool.setuptools.package-data]
 "pkgexampledatafiles.data"=["*.json"]
+"data"=["*.json"]
 
 [project.urls]
 "Homepage" = "https://github.com/RexBytes/pkgexampledatafiles"
 "Bug Tracker" = "https://github.com/RexBytes/pkgexampledatafiles/issues"
-"Download URL" ="https://github.com/RexBytes/pkgexampledatafiles/archive/refs/tags/v0.0.2.tar.gz"
+"Download URL" ="https://github.com/RexBytes/pkgexampledatafiles/archive/refs/tags/v0.0.3.tar.gz"
 
 [project.scripts]
 rexdatafile = "pkgexampledatafiles:my_datafiles_module.datafiles"
